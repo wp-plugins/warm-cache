@@ -43,5 +43,7 @@ First release
 
 == Screenshots ==
 
-2. Details
-1. Overview
+1. Details
+<a href="http://s.wordpress.org/extend/plugins/warm-cache/screenshot-1.png">Screenshot 1</a><br>
+2. Overview
+<a href="http://s.wordpress.org/extend/plugins/warm-cache/screenshot-2.png">Screenshot 2</a><br>
