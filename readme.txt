@@ -31,8 +31,9 @@ How to run a cronjob?
 > Ask your webhost how to set up a get call using wget or curl
 
 I have set up the cronjob but the stats table on the plugin page remains empty.
-> If you have object caching such as W3 total cache, the statistics cannot be read.
+> If you have object caching such as W3 total cache, the statistics cannot be read.<br>
 A help topic about this is placed <a href="http://wordpress.org/support/topic/plugin-w3-total-cache-strange-transient-problem?replies=1">on the support forums</a>.
+Note that the script is crawling your XML file (check your webhosts access log), but you cannot see the statistics.
 
 
 
@@ -44,6 +45,6 @@ First release
 == Screenshots ==
 
 1. Details
-<a href="http://s.wordpress.org/extend/plugins/warm-cache/screenshot-1.png">Screenshot 1</a><br>
+<a href="http://s.wordpress.org/extend/plugins/warm-cache/screenshot-1.png">Fullscreen Screenshot 1</a><br>
 2. Overview
-<a href="http://s.wordpress.org/extend/plugins/warm-cache/screenshot-2.png">Screenshot 2</a><br>
+<a href="http://s.wordpress.org/extend/plugins/warm-cache/screenshot-2.png">Fullscreen Screenshot 2</a><br>
