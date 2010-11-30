@@ -5,11 +5,11 @@ Requires at least: 2.3
 Tested up to: 3.0.1
 Stable tag: 1.1
 
-Crawls your website-pages based on google XML sitemap (google-sitemap-generator). If you have a caching plugin this wil keep your cache warm. Speeds up your site.
+Crawls your website-pages based on google XML sitemap (google-sitemap-generator). If you have a caching plugin this will keep your cache warm. Speeds up your site.
 
 == Description ==
 
-Crawls your website-pages based on google XML sitemap (google-sitemap-generator). If you have a caching plugin this wil keep your cache warm. 
+Crawls your website-pages based on google XML sitemap (google-sitemap-generator). If you have a caching plugin this will keep your cache warm. 
 Speeds up your site.<br>
 All urls in your sitemap will be visited by the plugin to keep the cache up to date.<br>
 Will show average page load times and pages visited.<br>
