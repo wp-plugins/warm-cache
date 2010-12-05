@@ -28,6 +28,14 @@
  * Changed: $all_plugins as var
  * Added: mijnpress_plugin_framework_showcredits_framework
  * Added: Info comments at top of file, with extend option info
+ * 
+ * 1.2
+ * Added: is_admin()
+ * 
+ * 1.3
+ * Added: get_plugin_url : $file = __FILE__
+ * > To fix when multiple plugins use this framework.
+ * Added: 'See attachments'
  * ------------------------------------------------------------------
  * 
  */
@@ -40,7 +48,7 @@ class mijnpress_plugin_framework
 {
     var $showcredits = true;
     var $showcredits_fordevelopers = true;
-    var $all_plugins = array('Admin renamer extended','Find replace','Simple add pages or posts','Force apply terms and conditions','GTmetrix website performance','Antispam for all fields','Mass Delete Tags','Auto Prune Posts','Warm cache');
+    var $all_plugins = array('Admin renamer extended','Find replace','Simple add pages or posts','Force apply terms and conditions','GTmetrix website performance','Antispam for all fields','Mass Delete Tags','Auto Prune Posts','Warm cache','See attachments');
     
     /**
      * Left menu display in Plugin menu
@@ -64,6 +72,16 @@ class mijnpress_plugin_framework
         }
         return $links;
     }
+
+	function is_admin()
+	{
+		require_once(ABSPATH . WPINC . '/pluggable.php');
+		$current_user = wp_get_current_user();
+		$current_user_id = ! empty($current_user) ? $current_user->id : 0;
+		$current_user = new WP_User($current_user_id);
+		if($current_user->has_cap('delete_users')) return true;
+		return false;
+	}	
 
     /**
      * Show default message as infobox
@@ -126,16 +144,16 @@ class mijnpress_plugin_framework
      * @param String $path
      * @return String
      */
-    function get_plugin_url($path = '') {
+    function get_plugin_url($path = '',$file = __FILE__) {
        global $wp_version;
 
        if (version_compare($wp_version, '2.8', '<')) { // Using WordPress 2.7
-          $folder = dirname(plugin_basename(__FILE__));
+          $folder = dirname(plugin_basename($file));
           if ('.' != $folder)
          $path = path_join(ltrim($folder, '/'), $path);
           return plugins_url($path);
        }
-       return plugins_url($path, __FILE__);
+       return plugins_url($path, $file);
     }
 }
 
