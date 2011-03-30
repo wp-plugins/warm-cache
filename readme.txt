@@ -3,7 +3,7 @@ Contributors: ramon fincken
 Tags: cache, warm, keep, xml, sitemap, load, speed, quick, tag, w3tc, optimize, page cache
 Requires at least: 2.3
 Tested up to: 3.0.1
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 
 Crawls your website-pages based on google XML sitemap (google-sitemap-generator). If you have a caching plugin this will keep your cache warm. Speeds up your site.
 
@@ -27,17 +27,23 @@ Needs a cronjob (wget or curl) to call the plugin.<br>
 
 == Frequently Asked Questions ==
 
-How to run a cronjob?
+= How to run a cronjob? =
 > Ask your webhost how to set up a get call using wget or curl
 
-I have set up the cronjob but the stats table on the plugin page remains empty.
+= I have set up the cronjob but the stats table on the plugin page remains empty. =
 > If you have object caching such as W3 total cache, the statistics cannot be read.<br>
 A help topic about this is placed <a href="http://wordpress.org/support/topic/plugin-w3-total-cache-strange-transient-problem?replies=1">on the support forums</a>.
 Note that the script is crawling your XML file (check your webhosts access log), but you cannot see the statistics.
 
+= I have a lot of questions and I want support where can I go? =
 
+The support forums over here, drop me a tweet to notify me of your support topic over here.<br>
+I always check my tweets, so mention my name with @ramonfincken and your problem.
 
 == Changelog ==
+
+= 1.1.2 =
+Changed: Random password call as mentioned by swanzai http://wordpress.org/support/topic/plugin-warm-cache-how-to-call-this-plugin-correctly
 
 = 1.1 =
 First release
