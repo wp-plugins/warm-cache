@@ -3,7 +3,7 @@
 Plugin Name: Warm cache
 Plugin URI: http://www.mijnpress.nl
 Description: Crawls your website-pages based on google XML sitemap (google-sitemap-generator). If you have a caching plugin this wil keep your cache warm. Speeds up your site.
-Version: 1.1.2
+Version: 1.5
 Author: Ramon Fincken
 Author URI: http://www.mijnpress.nl
 */
@@ -80,7 +80,10 @@ class warm_cache extends mijnpress_plugin_framework
 			else
 			{
 				$msg = 'Crawled in total '.$stats['stats_pages'].' pages in a total of '.$stats['stats_times']. ' seconds<br/>';
-				$msg .= 'Average page to load a page in seconds: '. $stats['stats_times']/$stats['stats_pages'];
+				if($stats['stats_pages'])
+				{
+					$msg .= 'Average page to load a page in seconds: '. $stats['stats_times']/$stats['stats_pages'];
+				}
 				$warm_cache_admin->show_message($msg);
 			}
 			echo '<table class="widefat">';

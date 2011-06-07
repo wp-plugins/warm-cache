@@ -2,8 +2,8 @@
 Contributors: ramon fincken
 Tags: cache, warm, keep, xml, sitemap, load, speed, quick, tag, w3tc, optimize, page cache
 Requires at least: 2.3
-Tested up to: 3.0.1
-Stable tag: 1.1.2
+Tested up to: 3.1.3
+Stable tag: 1.5
 
 Crawls your website-pages based on google XML sitemap (google-sitemap-generator). If you have a caching plugin this will keep your cache warm. Speeds up your site.
 
