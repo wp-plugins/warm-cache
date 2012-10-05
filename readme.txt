@@ -1,9 +1,9 @@
 === Warm Cache ===
 Contributors: ramon fincken
-Tags: cache, warm, keep, xml, sitemap, load, speed, quick, tag, w3tc, optimize, page cache
+Tags: cache, warm, keep, xml, sitemap, load, speed, quick, tag, w3tc, optimize, page cache, preload, google, pagespeed, webmaster
 Requires at least: 2.3
-Tested up to: 3.1.3
-Stable tag: 1.5
+Tested up to: 3.4.2
+Stable tag: 1.6
 
 Crawls your website-pages based on google XML sitemap (google-sitemap-generator). If you have a caching plugin this will keep your cache warm. Speeds up your site.
 
@@ -41,6 +41,9 @@ The support forums over here, drop me a tweet to notify me of your support topic
 I always check my tweets, so mention my name with @ramonfincken and your problem.
 
 == Changelog ==
+
+= 1.6 =
+Added: Support for sub-sitemaps using < sitemap > format (as used in Beta of Google XML sitemaps). Thanks to Pascal90.de!
 
 = 1.1.2 =
 Changed: Random password call as mentioned by swanzai http://wordpress.org/support/topic/plugin-warm-cache-how-to-call-this-plugin-correctly
