@@ -3,7 +3,7 @@
 Plugin Name: Warm cache
 Plugin URI: http://www.mijnpress.nl
 Description: Crawls your website-pages based on google XML sitemap (google-sitemap-generator). If you have a caching plugin this wil keep your cache warm. Speeds up your site.
-Version: 1.6
+Version: 1.7
 Author: Ramon Fincken
 Author URI: http://www.mijnpress.nl
 */
@@ -129,18 +129,21 @@ class warm_cache extends mijnpress_plugin_framework
 				$table_string .= date('l jS F Y h:i:s A',$temp['time_start']).'</td><td valign="top" style="text-align: center;">';
 				$table_string .= $temp['time'].'</td><td valign="top">';
 				$table_string .= $temp['pages_count'].'</td><td valign="top">';
-				$table_string .= $temp['time']/$temp['pages_count'].'</td><td valign="top">';
+				$table_string .= (intval($temp['pages_count'])!=0) ? $temp['time']/$temp['pages_count'].'</td><td valign="top">' : '- </td><td valign="top">';
 				
-				foreach($temp['pages'] as $p_key => $p_value)
+				if(intval($temp['pages_count']) > 0)
 				{
-					$table_string .= '<a href="'.$p_value.'" title="'.$p_value.'">';
-					$temp_string = str_replace($site_url,'',$p_value);
-					if($temp_string == '/')	{ $temp_string = $site_url; } // Site url, show this instead of "/"			
-					$table_string .= $temp_string;
-					$table_string .= '</a>';
-					$string_length += strlen($temp_string);
-					if($string_length > 70) {$string_length =0; $table_string .= '<br/>';} // New line
-					$table_string .= "\n";
+					foreach($temp['pages'] as $p_key => $p_value)
+					{
+						$table_string .= '<a href="'.$p_value.'" title="'.$p_value.'">';
+						$temp_string = str_replace($site_url,'',$p_value);
+						if($temp_string == '/')	{ $temp_string = $site_url; } // Site url, show this instead of "/"			
+						$table_string .= $temp_string;
+						$table_string .= '</a>';
+						$string_length += strlen($temp_string);
+						if($string_length > 70) {$string_length =0; $table_string .= '<br/>';} // New line
+						$table_string .= "\n";
+					}
 				}
 				$table_string .= '</td></tr>';
 				$table_string .= "\n\n";

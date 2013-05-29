@@ -2,8 +2,8 @@
 Contributors: ramon fincken
 Tags: cache, warm, keep, xml, sitemap, load, speed, quick, tag, w3tc, optimize, page cache, preload, google, pagespeed, webmaster
 Requires at least: 2.3
-Tested up to: 3.4.2
-Stable tag: 1.6
+Tested up to: 3.5.1
+Stable tag: 1.7
 
 Crawls your website-pages based on google XML sitemap (google-sitemap-generator). If you have a caching plugin this will keep your cache warm. Speeds up your site.
 
@@ -16,7 +16,7 @@ All urls in your sitemap will be visited by the plugin to keep the cache up to d
 Will show average page load times and pages visited.<br>
 
 Needs google XML sitemap to read the generated XML file.<br>
-Needs a cronjob (wget or curl) to call the plugin.<br>
+Needs a cronjob (wget or curl) to call the plugin. You need to setup the cronjob yourself! (Or ask your sysadmin to help you).<br>
 * Coding by <a href="http://www.mijnpress.nl" title="MijnPress.nl WordPress ontwikkelaars">MijnPress.nl</a><br>
 * Crawl script idea by <a href="http://blogs.tech-recipes.com/johnny/2006/09/17/handling-the-digg-effect-with-wordpress-caching/">http://blogs.tech-recipes.com/johnny/2006/09/17/handling-the-digg-effect-with-wordpress-caching/</a>
 
@@ -42,6 +42,8 @@ The support forums over here, drop me a tweet to notify me of your support topic
 I always check my tweets, so mention my name with @ramonfincken and your problem.
 
 == Changelog ==
+= 1.7 =
+Bugfix: Extra if/else for zero pages to fix x/0 errors. Thanks to khromov http://wordpress.org/support/topic/division-by-zero-2 http://wordpress.org/support/profile/khromov
 
 = 1.6 =
 Added: Support for sub-sitemaps using < sitemap > format (as used in Beta of Google XML sitemaps). Thanks to Pascal90.de!
