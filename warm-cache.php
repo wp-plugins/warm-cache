@@ -2,8 +2,8 @@
 /*
 Plugin Name: Warm cache
 Plugin URI: http://www.mijnpress.nl
-Description: Crawls your website-pages based on google XML sitemap (google-sitemap-generator). If you have a caching plugin this wil keep your cache warm. Speeds up your site.
-Version: 1.7
+Description: Crawls your website-pages based on any XML sitemap plugin. If you have a caching plugin this wil keep your cache warm. Speeds up your site.
+Version: 1.8
 Author: Ramon Fincken
 Author URI: http://www.mijnpress.nl
 */
@@ -71,8 +71,10 @@ class warm_cache extends mijnpress_plugin_framework
 			{
 				$msg = 'Ok, we have detected your sitemap url but it has not been visited by the plugin\'s crawler.<br/>';
 				$warm_cache_api_url = trailingslashit(get_bloginfo('url')).'?warm_cache='.get_option('plugin_warm_cache_api');
-				$msg .= 'This plugin will not work standalone. <strong>You need to set up a wget or curl cron job from your webhost every hour.</strong><br/>';
-				$msg .= 'The url you should call with wget or curl is: '.$warm_cache_api_url;
+				$msg .= 'The url you should call from a cronjob is: '.$warm_cache_api_url.'<br/>';
+				$msg .= 'To re-set the key, visit this url: '.admin_url('plugins.php?page=warm-cache/warm-cache.php&resetkey=true').'<br/>';
+				$msg .= 'If you are in need of an external cronjob service, you might like to use Easycron.com (affiliate link) <a href="http://www.easycron.com/?ref=12201">http://www.easycron.com/?ref=12201</a>';
+				
 
 				$warm_cache_admin->show_message($msg);
 				echo '<br/><br/>';
@@ -93,6 +95,16 @@ class warm_cache extends mijnpress_plugin_framework
 			$warm_cache_admin->content_end();
 		}
 	}
+	
+	/**
+	 * Add or update the API key
+	 */
+	private function change_apikey()
+	{
+			$special_chars = false;
+			delete_option('plugin_warm_cache_api');
+			add_option('plugin_warm_cache_api',wp_generate_password(9, $special_chars));		
+	}
 
 	/**
 	* Gets table and stats
@@ -103,8 +115,7 @@ class warm_cache extends mijnpress_plugin_framework
 		if(!isset($statdata) || !is_array($statdata))
 		{
 			add_option('plugin_warm_cache_statdata', array(), NULL, 'no');
-			$special_chars = false;
-			add_option('plugin_warm_cache_api',wp_generate_password(9, $special_chars));
+			$this->change_apikey();
 		}
 
 		$table_string = '';
@@ -155,21 +166,47 @@ class warm_cache extends mijnpress_plugin_framework
 		return array('crawl' => true, 'stats_pages' => $stats_pages, 'stats_times' => $stats_times, 'table_string' => $table_string);
 	}
 
+	/**
+	 * Updates sitemap url override
+	 * @param unknown_type $url
+	 */
+	private function update_sitemap_overide_url($url)
+	{
+		delete_option('plugin_warm_cache_sitemap_override');
+		add_option('plugin_warm_cache_sitemap_override',htmlspecialchars($url));			
+	}
+	
 	private function configuration_check()
 	{
 		$this->google_sitemap_generator_options = get_option("sm_options");
+		$msg = '';
+		if(isset($_GET['resetkey']))
+		{
+			$this->change_apikey();
+			$msg .= __('API key has changed','plugin_warm_cache');
+			$msg .= '<br/>';			
+		}
 		
-		if(!($this->google_sitemap_generator_options && is_array($this->google_sitemap_generator_options))) {
-			$msg = __('Could not find sitemap options, did you install and configure google-sitemap-generator ?','plugin_warm_cache');
+		if(isset($_POST['update_sitemap']))
+		{
+			$this->update_sitemap_overide_url($_POST['update_sitemap']);
+		}
+		
+		$msg .= '<form method="post" action="'.admin_url('plugins.php?page=warm-cache/warm-cache.php'). '">Experienced users only, enter your full sitemap url if we cannot detect it automatically (do not forget the http:// up front): ';
+		$msg .= '<br/><input type="text" value="'.get_option('plugin_warm_cache_sitemap_override').'" name="update_sitemap" size="60" /><input type="submit" value="Use this sitemap" /></form>';
+		
+		if(!($this->google_sitemap_generator_options && is_array($this->google_sitemap_generator_options)) || !warm_cache::get_sitemap_url()) {
+			$msg .= __('Could not find sitemap options, did you install and configure a sitemap plugin ?','plugin_warm_cache');
 			$returnvar = false;
 		}
 		else
 		{
-			$msg = __('OK, google-sitemap-generator has been installed','plugin_warm_cache');
-			$msg .= '<br><br>';
 			$msg .= 'Sitemap url: <a href="'.warm_cache::get_sitemap_url().'">'.$this->sitemap_url.'</a><br/>';
 			$warm_cache_api_url = trailingslashit(get_bloginfo('url')).'?warm_cache='.get_option('plugin_warm_cache_api');
-			$msg .= 'The url you shoul call from a cronjob is: '.$warm_cache_api_url;
+			$msg .= 'The url you should call from a cronjob is: '.$warm_cache_api_url.'<br/>';
+			$msg .= 'To re-set the key, visit this url: '.admin_url('plugins.php?page=warm-cache/warm-cache.php&resetkey=true').'<br/>';
+			$msg .= 'If you are in need of an external cronjob service, you might like to use Easycron.com (affiliate link) <a href="http://www.easycron.com/?ref=12201">http://www.easycron.com/?ref=12201</a>';
+			
 			$returnvar = true;
 		}
 		$this->show_message($msg);
@@ -184,6 +221,13 @@ class warm_cache extends mijnpress_plugin_framework
 		} else {
 			$sitemap_url =  trailingslashit(get_bloginfo('url')). $this->google_sitemap_generator_options["sm_b_filename"];
 		}
+		
+		$override = get_option('plugin_warm_cache_sitemap_override');
+		if($override && !empty($override) && $override != 'http://')
+		{
+			$sitemap_url = $override;
+		}
+		
 		$this->sitemap_url = $sitemap_url;
 		return $this->sitemap_url;
 	}

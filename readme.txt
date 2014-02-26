@@ -1,15 +1,15 @@
 === Warm Cache ===
 Contributors: ramon fincken
-Tags: cache, warm, keep, xml, sitemap, load, speed, quick, tag, w3tc, optimize, page cache, preload, google, pagespeed, webmaster
+Tags: cache, warm, keep, xml, sitemap, load, speed, quick, tag, w3tc, optimize, page cache, preload, google, pagespeed, webmaster, sitemap, generator
 Requires at least: 2.3
-Tested up to: 3.5.1
-Stable tag: 1.7
+Tested up to: 3.8.1
+Stable tag: 1.8
 
-Crawls your website-pages based on google XML sitemap (google-sitemap-generator). If you have a caching plugin this will keep your cache warm. Speeds up your site.
+Crawls your website-pages based on google XML sitemap. If you have a caching plugin this will keep your cache warm. Speeds up your site.
 
 == Description ==
 
-Crawls your website-pages based on google XML sitemap (google-sitemap-generator). If you have a caching plugin this will keep your cache warm. 
+Crawls your website-pages based on any XML sitemap. If you have a caching plugin this will keep your cache warm. 
 Speeds up your site.<br>
 Compatible with following elements: < sitemap > < url ><br>
 All urls in your sitemap will be visited by the plugin to keep the cache up to date.<br>
@@ -42,6 +42,12 @@ The support forums over here, drop me a tweet to notify me of your support topic
 I always check my tweets, so mention my name with @ramonfincken and your problem.
 
 == Changelog ==
+= 1.8 =
+Added: Sitemap url override<br>
+Changed: Info txt in plugin<br>
+Changed: Refresh random token<br>
+Added: Cron service link
+
 = 1.7 =
 Bugfix: Extra if/else for zero pages to fix x/0 errors. Thanks to khromov http://wordpress.org/support/topic/division-by-zero-2 http://wordpress.org/support/profile/khromov
 
