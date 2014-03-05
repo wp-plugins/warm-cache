@@ -3,7 +3,7 @@ Contributors: ramon fincken
 Tags: cache, warm, keep, xml, sitemap, load, speed, quick, tag, w3tc, optimize, page cache, preload, google, pagespeed, webmaster, sitemap, generator
 Requires at least: 2.3
 Tested up to: 3.8.1
-Stable tag: 1.8
+Stable tag: 1.8.1
 
 Crawls your website-pages based on google XML sitemap. If you have a caching plugin this will keep your cache warm. Speeds up your site.
 
@@ -42,6 +42,9 @@ The support forums over here, drop me a tweet to notify me of your support topic
 I always check my tweets, so mention my name with @ramonfincken and your problem.
 
 == Changelog ==
+= 1.8.1 =
+Added: Flush to prevent loadbalancer/proxy timeout see https://wordpress.org/support/topic/needs-flush-to-write-buffers-to-prevent-timeouts
+
 = 1.8 =
 Added: Sitemap url override<br>
 Changed: Info txt in plugin<br>

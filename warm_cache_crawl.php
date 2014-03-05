@@ -70,6 +70,11 @@ if(defined('CALLED'))
 				echo '<br/>Busy with: '.$page;
 				$newvalue['pages'][] = $page;
 				$tmp = wp_remote_get($page);
+				// https://wordpress.org/support/topic/needs-flush-to-write-buffers-to-prevent-timeouts
+				if(function_exists('flush'))
+				{
+					flush(); // prevent timeout from the loadbalancer
+				}
 			}
 		}
 		else
