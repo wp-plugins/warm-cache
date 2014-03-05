@@ -3,7 +3,7 @@
 Plugin Name: Warm cache
 Plugin URI: http://www.mijnpress.nl
 Description: Crawls your website-pages based on any XML sitemap plugin. If you have a caching plugin this wil keep your cache warm. Speeds up your site.
-Version: 1.8
+Version: 1.8.1
 Author: Ramon Fincken
 Author URI: http://www.mijnpress.nl
 */
