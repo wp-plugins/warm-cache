@@ -2,7 +2,7 @@
 Contributors: ramon fincken
 Tags: cache, warm, keep, xml, sitemap, load, speed, quick, tag, w3tc, optimize, page cache, preload, google, pagespeed, webmaster, sitemap, generator
 Requires at least: 2.3
-Tested up to: 3.8.1
+Tested up to: 3.9.1
 Stable tag: 1.8.1
 
 Crawls your website-pages based on google XML sitemap. If you have a caching plugin this will keep your cache warm. Speeds up your site.
@@ -24,7 +24,7 @@ Needs a cronjob (wget or curl) to call the plugin. You need to setup the cronjob
 
 1. Upload directory `mass_delete_tags` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Visit Plugins menu to mass delete your tags.
+3. Visit Plugins menu to view your Warm cache options.
 
 == Frequently Asked Questions ==
 
