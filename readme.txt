@@ -1,6 +1,6 @@
 === Warm Cache ===
 Contributors: ramon fincken
-Tags: cache, warm, keep, xml, sitemap, load, speed, quick, tag, w3tc, optimize, page cache, preload, google, pagespeed, webmaster, sitemap, generator
+Tags: cache, warm, keep, xml, sitemap, load, speed, quick, tag, w3tc, optimize, page cache, preload, google, pagespeed, webmaster, sitemap, generator, warmup, cold, expire, expired
 Requires at least: 2.3
 Tested up to: 3.9.1
 Stable tag: 1.8.1
