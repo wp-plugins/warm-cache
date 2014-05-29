@@ -43,7 +43,7 @@ I always check my tweets, so mention my name with @ramonfincken and your problem
 
 == Changelog ==
 = 1.9 =
-Changed: Better handling of pre-checks
+Changed: Better handling of pre-checks<br>
 Changed: Changed API key change message
 
 = 1.8.1 =
