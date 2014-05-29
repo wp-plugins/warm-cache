@@ -3,7 +3,7 @@
 Plugin Name: Warm cache
 Plugin URI: http://www.mijnpress.nl
 Description: Crawls your website-pages based on any XML sitemap plugin. If you have a caching plugin this wil keep your cache warm. Speeds up your site.
-Version: 1.8.1
+Version: 1.9
 Author: Ramon Fincken
 Author URI: http://www.mijnpress.nl
 */
@@ -47,20 +47,12 @@ class warm_cache extends mijnpress_plugin_framework
 
 	public function admin_menu()
 	{
-
 		load_plugin_textdomain('plugin_warm_cache','/wp-content/plugins/warm-cache/language/');		
 		$warm_cache_admin = new warm_cache();
 		$warm_cache_admin->plugin_title = 'Warm cache';
 		if(!$warm_cache_admin->configuration_check())
 		{
-			$warm_cache_admin->content_start();
 
-			$msg = '<strong>You need to install the Google XML sitemap plugin<br/>';
-			$msg .= 'Download the zipfile from <a href="http://wordpress.org/extend/plugins/google-sitemap-generator/">http://wordpress.org/extend/plugins/google-sitemap-generator/</a><br/>';
-			$msg .= 'Or use <a href="./plugin-install.php">plugin-install.php</a> to search for "google sitemap generator"</strong>';
-			$warm_cache_admin->show_message($msg);
-
-			$warm_cache_admin->content_end();
 		}
 		else
 		{
@@ -101,9 +93,9 @@ class warm_cache extends mijnpress_plugin_framework
 	 */
 	private function change_apikey()
 	{
-			$special_chars = false;
-			delete_option('plugin_warm_cache_api');
-			add_option('plugin_warm_cache_api',wp_generate_password(9, $special_chars));		
+		$special_chars = false;
+		delete_option('plugin_warm_cache_api');
+		add_option('plugin_warm_cache_api',wp_generate_password(9, $special_chars));		
 	}
 
 	/**
@@ -183,25 +175,29 @@ class warm_cache extends mijnpress_plugin_framework
 		if(isset($_GET['resetkey']))
 		{
 			$this->change_apikey();
-			$msg .= __('API key has changed','plugin_warm_cache');
-			$msg .= '<br/>';			
+			$msg .= __('API key has changed, please update your cronjobs right now!','plugin_warm_cache');
+			$this->show_message('<strong>'.$msg.'</strong>');
+			$msg = ''; // Reset msg
 		}
 		
 		if(isset($_POST['update_sitemap']))
 		{
 			$this->update_sitemap_overide_url($_POST['update_sitemap']);
 		}
-		
-		$msg .= '<form method="post" action="'.admin_url('plugins.php?page=warm-cache/warm-cache.php'). '">Experienced users only, enter your full sitemap url if we cannot detect it automatically (do not forget the http:// up front): ';
+		// Init config
+		$this->get_sitemap_url();
+
+		$msg .= '<form method="post" action="'.admin_url('plugins.php?page=warm-cache/warm-cache.php'). '">Please enter your full sitemap url if we cannot detect it automatically (do not forget the http:// up front): ';
 		$msg .= '<br/><input type="text" value="'.get_option('plugin_warm_cache_sitemap_override').'" name="update_sitemap" size="60" /><input type="submit" value="Use this sitemap" /></form>';
 		
-		if(!($this->google_sitemap_generator_options && is_array($this->google_sitemap_generator_options)) || !warm_cache::get_sitemap_url()) {
-			$msg .= __('Could not find sitemap options, did you install and configure a sitemap plugin ?','plugin_warm_cache');
+
+		if(!($this->google_sitemap_generator_options && is_array($this->google_sitemap_generator_options)) && !$this->sitemap_url) {
+			$msg .= __('Could not find sitemap options, please enter your sitemap url','plugin_warm_cache');
 			$returnvar = false;
 		}
 		else
 		{
-			$msg .= 'Sitemap url: <a href="'.warm_cache::get_sitemap_url().'">'.$this->sitemap_url.'</a><br/>';
+			$msg .= 'Sitemap url: <a target="_blank" href="'.$this->sitemap_url.'">'.$this->sitemap_url.'</a><br/>';
 			$warm_cache_api_url = trailingslashit(get_bloginfo('url')).'?warm_cache='.get_option('plugin_warm_cache_api');
 			$msg .= 'The url you should call from a cronjob is: '.$warm_cache_api_url.'<br/>';
 			$msg .= 'To re-set the key, visit this url: '.admin_url('plugins.php?page=warm-cache/warm-cache.php&resetkey=true').'<br/>';
@@ -209,16 +205,17 @@ class warm_cache extends mijnpress_plugin_framework
 			
 			$returnvar = true;
 		}
-		$this->show_message($msg);
+		$this->show_message('<strong>'.$msg.'</strong>');
 
 		return $returnvar;
 	}
 
 	public function get_sitemap_url()
 	{
+		// Guess sitemap url from Google XML sitemap generator
 		if($this->google_sitemap_generator_options["sm_b_location_mode"]=="manual") {
 			$sitemap_url = $this->google_sitemap_generator_options["sm_b_fileurl_manual"];
-		} else {
+		} elseif($this->google_sitemap_generator_options["sm_b_filename"] != '') {
 			$sitemap_url =  trailingslashit(get_bloginfo('url')). $this->google_sitemap_generator_options["sm_b_filename"];
 		}
 		
@@ -227,9 +224,13 @@ class warm_cache extends mijnpress_plugin_framework
 		{
 			$sitemap_url = $override;
 		}
-		
-		$this->sitemap_url = $sitemap_url;
-		return $this->sitemap_url;
+		// Final check
+		if(isset($sitemap_url) && $sitemap_url && !empty($sitemap_url) && $sitemap_url != 'http://' &&  $sitemap_url != trailingslashit(get_bloginfo('url')))
+		{
+			$this->sitemap_url = $sitemap_url;
+			return $this->sitemap_url;
+		}
+		return false;
 	}
 }
 	
