@@ -58,7 +58,7 @@ class mijnpress_plugin_framework
 {
     var $showcredits = true;
     var $showcredits_fordevelopers = true;
-    var $all_plugins = array('Admin renamer extended','Find replace','Simple add pages or posts','Force apply terms and conditions','GTmetrix website performance','Antispam for all fields','Mass Delete Tags','Auto Prune Posts','Warm cache','See attachments','Automatic Comment Scheduler','Register plus redux export users','Subscribe2 widget','Define Constants','Mass Delete Unused Tags','Prevent core update','WPML flag in menu', 'WPsc MijnPress','Autoptimize admin bar fix');
+    var $all_plugins = array('Admin renamer extended','Find replace','Simple add pages or posts','Force apply terms and conditions','GTmetrix website performance','Antispam for all fields','Mass Delete Tags','Auto Prune Posts','Warm cache','See attachments','Automatic Comment Scheduler','Subscribe2 widget','Define Constants','Mass Delete Unused Tags','Prevent core update','WPML flag in menu', 'WPsc MijnPress');
     
     /**
      * Left menu display in Plugin menu
@@ -94,6 +94,18 @@ class mijnpress_plugin_framework
 		}    	
     }
 
+    function disable_social($type = 'sociable')
+    {
+    	if($type == 'sociable')
+    	{
+    		remove_filter( 'the_content', 'auto_sociable' );
+    	}
+    	if($type == '1click')
+    	{    	
+    		remove_filter ( 'the_content', 'lacands_wp_filter_post_content');
+    	}
+    }
+    
     /**
      * Checks if user is admin or has plugin caps.
      */
@@ -235,8 +247,9 @@ function mijnpress_plugin_framework_showcredits($plugin_title,$all_plugins)
         <h3 class="hndle"><span>About <?php echo $plugin_title; ?></span></h3>
         <div class="inside">
             This plugin was created by Ramon Fincken.<br>
-He likes to create WordPress websites and plugins (currently only Dutch customers) and he is co-admin at the <a href="http://www.linkedin.com/groups?about=&gid=1644947&trk=anet_ug_grppro">Dutch LinkedIn WordPress group</a>.<br/><br/>Visit his WordPress website at: <a href="http://www.mijnpress.nl">MijnPress.nl</a><br/>
+He likes to create WordPress websites and plugins and he is co-admin at the <a href="http://www.linkedin.com/groups?about=&gid=1644947&trk=anet_ug_grppro">Dutch LinkedIn WordPress group</a>.<br/><br/>Visit his WordPress websites at: <a href="http://www.MijnPress.nl" title="Custom WordPress development">MijnPress.nl</a>, <a href="http://www.ManagedWPHosting.nl" title="High end WordPress hosting">ManagedWPHosting.nl</a><br/>
 If you are a coder, you might like to visit <a href="http://www.ramonfincken.com/tag/wordpress.html">his WordPress blogposts</a>.
+<br/><br/><a href="http://donate.ramonfincken.com/">Like this plugin? Donate me a coffee :)</a>
 <br/><br/><a href="http://pluginsupport.mijnpress.nl">Is this plugin broken? Report it here</a>            
         </div>
     </div>
