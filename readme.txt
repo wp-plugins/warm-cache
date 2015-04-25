@@ -22,7 +22,7 @@ Needs a cronjob (wget or curl) to call the plugin. You need to setup the cronjob
 
 == Installation ==
 
-1. Upload directory `mass_delete_tags` to the `/wp-content/plugins/` directory
+1. Upload directory `warm-cache` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Visit Plugins menu to view your Warm cache options.
 
